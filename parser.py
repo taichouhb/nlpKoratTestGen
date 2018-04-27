@@ -39,10 +39,12 @@ def classVarHelper(startInput, customClassNames):
 	#This keeps checking only within the main class block. 
 		line = lines[i]
 		
-		if "{" in line: #TODO: Corner case, where a line may have more than 1 of these
-			stack.append("{")
-		if "}" in line: #TODO: Corner case, where a line may have more than 1 of these
-			stack.pop()
+		for c in line:
+			if c=="{":
+				stack.append("{")
+			elif c=="}":
+				stack.pop()	
+		
 		if len(stack) == 1 and len(line) > 3: #Current line of code is not in a method block. Should be in highest level of class block
 			#ie a class Variable? 
 	
@@ -75,6 +77,7 @@ def parseClassVariables(startInput, customClassNames):
 	#Now, iterate through the list of customClasses and find the variables in there.
 	listed = list(customClassesFound)
 	classToFile = dict(customClassNames)
+	customClassesFound.add(startInput[0])
 	while len(listed) > 0:
 		className = listed.pop(0) #remove first element in list
 		foundVars[className] = {}
@@ -85,7 +88,7 @@ def parseClassVariables(startInput, customClassNames):
 				listed.append(i)
 				customClassesFound.add(i)
 
-	return foundVars, customClassesFound
+	return foundVars
 
 
 
