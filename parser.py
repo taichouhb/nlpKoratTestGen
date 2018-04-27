@@ -17,37 +17,35 @@ otherKeyWords = ["abstract", "assert", "break", "case", "catch", "class", "conti
 
 ignoredKeywords = ["public", "private"]
 
-
-def parseClassVariables(startClass, customClassNames):
+def classVarHelper(startInput, customClassNames): 
 	foundMainClass = False
+	startClass, startFile = startInput
 	stack = []
 	foundVars = {} #Map key: type, value: variable name
 	foundVars[startClass] = {}
-	classesFound = [] 
-	f = open(startClass + ".java", "r")
+	customClassesFound = set() 
+	f = open(startFile + ".java", "r")
 	lines = f.readlines()
 	f.close()
-	print("reading file")
 	i = 0
 	while foundMainClass==False and i < len(lines):
 		line = lines[i]
-		# print(line)	
+		
 		if "class " + startClass in line:
 			foundMainClass = True
 			stack.append("{")
 		i+=1
-	print("found main class")
 	while len(stack) > 0 and i < len(lines):#we're already within the main class definition. Now look for class variables
 	#This keeps checking only within the main class block. 
 		line = lines[i]
-		# print(line)
+		
 		if "{" in line: #TODO: Corner case, where a line may have more than 1 of these
 			stack.append("{")
 		if "}" in line: #TODO: Corner case, where a line may have more than 1 of these
 			stack.pop()
 		if len(stack) == 1 and len(line) > 3: #Current line of code is not in a method block. Should be in highest level of class block
 			#ie a class Variable? 
-			print(line)
+	
 			relevant = True
 			for w in otherKeyWords:
 				if w in line:
@@ -59,33 +57,50 @@ def parseClassVariables(startClass, customClassNames):
 				if line.startswith("private"):
 					line = line[7:]
 				tokens = line.strip().rstrip(";").split(" ")
-				if tokens[0] not in primitiveList:
-					classesFound.append(tokens[0])
-				# print(tokens)
+
+				if tokens[0] in [i[0] for i in customClassNames]:
+					customClassesFound.add(tokens[0])
+				
 				if tokens[0] not in foundVars[startClass]:
 					foundVars[startClass][tokens[0]] = []
 				foundVars[startClass][tokens[0]].append(tokens[1])
 		i+=1
-	return foundVars, classesFound
+	return (foundVars, customClassesFound)
 
+#start Input: (startClass, startFile)
+#customClassNames: [(Class, File), (Class, File), etc]
+def parseClassVariables(startInput, customClassNames):
+	
+	foundVars, customClassesFound = classVarHelper(startInput, customClassNames)
+	#Now, iterate through the list of customClasses and find the variables in there.
+	listed = list(customClassesFound)
+	classToFile = dict(customClassNames)
+	while len(listed) > 0:
+		className = listed.pop(0) #remove first element in list
+		foundVars[className] = {}
+		i_found, i_set = classVarHelper( (className, classToFile[className]), customClassNames )
+		foundVars[className] = i_found[className]
+		for i in i_set:
+			if i not in customClassesFound:
+				listed.append(i)
+				customClassesFound.add(i)
 
-
-
-
-
-
-
-
-
-
-
-
+	return foundVars, customClassesFound
 
 
 
 def main():
-	print(parseClassVariables(sys.argv[1], sys.argv[2:]))
+	#"Class.Filename"
+	inp = sys.argv[1].split(".")
+	startInput = (inp[0], inp[1])
+	arr = []
+	for val in sys.argv[2:]:
+		vals = val.split(".")
+		arr.append((vals[0], vals[1]))
+	print(parseClassVariables(startInput, arr))
 
 
 if __name__ == "__main__":
 	main()
+
+#python parser.py RaceFreeTest.RaceFreeTest threadThing.RaceFreeTest syncObject.RaceFreeTest
