@@ -19,8 +19,6 @@ def findComments(givenFile):
     commentsDict = {}
     numOfCommentSections = 0
     for line in lines:
-        # print(str(lineCount) + ") " + line)
-        # lineCount+=1
 
         for word in line.split(" "):
             if "/*" in word:
@@ -34,13 +32,41 @@ def findComments(givenFile):
             if inComment == 1:
                 commentsDict[numOfCommentSections] = commentsDict[numOfCommentSections] + word + " "
 
-    for key in commentsDict.keys():
-        print(str(key) + ") " + commentsDict[key])
+    # for key in commentsDict.keys():
+    #     print(str(key) + ") " + commentsDict[key] + "\n\n")
 
-
-
+    return commentsDict
 
 def findCommentsAndCorrespondingCode(givenFile):
-    findComments(givenFile)
+    return findComments(givenFile)
 
-findCommentsAndCorrespondingCode("TowersOfHanoi.java")
+def findNL_JavaDoc_Sections(givenComment):
+    inJavaDocSection = 0
+    NLPString = ""
+    JavaDocStringDict = ""
+    for word in givenComment.split(" "):
+        print(word)
+        if "@" in word:
+            inJavaDocSection = 1
+
+        if inJavaDocSection == 0:
+            NLPString += " " + word
+        else:
+            JavaDocStringDict += " " + word
+
+
+    NLPString = NLPString.replace("/*", "")
+    print("NLPString = " + NLPString)
+    print("JavaDocStringDict = " + JavaDocStringDict)
+
+def generateRepOk(something):
+    findNL_JavaDoc_Sections(something)
+
+
+
+commentsDict = findCommentsAndCorrespondingCode("TowersOfHanoi.java")
+
+# for key in commentsDict.keys():
+#     print(str(key) + ") " + commentsDict[key] + "\n\n")
+
+generateRepOk(commentsDict[2])
