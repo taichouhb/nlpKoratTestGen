@@ -23,14 +23,13 @@ def findComments(givenFile):
         # lineCount+=1
 
         for word in line.split(" "):
-            if word.startswith("/*"):
+            if "/*" in word:
                 inComment = 1
                 numOfCommentSections+=1
                 commentsDict[numOfCommentSections] = ""
 
-            if word.startswith("*/"):
+            if "*/" in word:
                 inComment = 0
-
 
             if inComment == 1:
                 commentsDict[numOfCommentSections] = commentsDict[numOfCommentSections] + word + " "
