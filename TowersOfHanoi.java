@@ -30,13 +30,15 @@ public class Tower {
 		index = i;
 	}
 
-	/* Returns the int index variable*/
+	/* Returns the int index variable
+	@return index the index of the tower*/
 	public int index() {
 		return index;
 	}
 
 	/* If the disk is not empty or disks.peek() <= d, then print "Error placing disk"
-	else push d */
+	else push d
+	@param d add int d*/
 	public void add(int d) {
 		if(!disks.isEmpty() && disks.peek() <= d) {
 			System.out.println("Error placing disk " + d);
@@ -46,7 +48,8 @@ public class Tower {
 		}
 	}
 
-  /* Pop from disk and add to the given Tower */
+  /* Pop from disk and add to the given Tower
+	@param t pass in Tower t*/
 	public void moveTopTo(Tower t) {
 		int top = disks.pop();
 		t.add(top);
