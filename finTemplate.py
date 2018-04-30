@@ -55,7 +55,7 @@ def finitizationGen(startClass, classDictionary):
     for primitive in presentPrimitives:
         if(primitive != "char"):
             capital = capitalization[primitive]
-            setString += "I" + capital + "Set " + primitive + "s = f.create" + \
+            setString += "I" + capital + "Set " + primitive + "Set = f.create" + \
                     capital + "Set(size, size);\n"
 
     structureString = ""
