@@ -66,7 +66,7 @@ def finitizationGen(startClass, classDictionary):
         if(key != "char"):
             names = firstMap[key]
             for name in names:
-                setString += "f.set(\"" + name + "\", " + key + "s);\n"
+                setString += "f.set(\"" + name + "\", " + key.lower() + "Set);\n"
 
     for iclass in allClasses:
         if(iclass != startClass):
@@ -76,7 +76,7 @@ def finitizationGen(startClass, classDictionary):
                 if(key != "char"):
                     names = theMap[key]
                     for name in names:
-                        setString += "f.set(" + iclass + ".class, \"" + name + "\", " + key + "s);\n"
+                        setString += "f.set(" + iclass + ".class, \"" + name + "\", " + key.lower() + "Set);\n"
 
     tail = "return f;\n}\n}"
     toReturn = header + "\n" + setString + "\n" + structureString + "\n" + tail
