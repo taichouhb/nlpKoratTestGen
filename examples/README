@@ -3,11 +3,14 @@ README
 
 TO COMPILE AND RUN WITH KORAT
 
-#For Windows: (Change ; to : on ubuntu) 
+#For Windows: 
 
 javac -cp korat\korat.jar -source 6 -target 6 examples/*.java
 java -cp korat\korat.jar;examples korat.Korat --class DoublyLinkedList --args 2,3,3,3
 
+#For Ubuntu:
+javac -cp korat/korat.jar -source 6 -target 6 examples/*.java
+java -cp korat/korat.jar:examples korat.Korat --class DoublyLinkedList --args 2,3,3,3
 
 
 TO RUN VARIABLE_PARSER
