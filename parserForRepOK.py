@@ -43,30 +43,79 @@ def findCommentsAndCorrespondingCode(givenFile):
 def findNL_JavaDoc_Sections(givenComment):
     inJavaDocSection = 0
     NLPString = ""
-    JavaDocStringDict = ""
+    JavaDocString= ""
     for word in givenComment.split(" "):
-        print(word)
+        # print(word)
         if "@" in word:
             inJavaDocSection = 1
 
         if inJavaDocSection == 0:
             NLPString += " " + word
         else:
-            JavaDocStringDict += " " + word
+            JavaDocString += " " + word
 
 
     NLPString = NLPString.replace("/*", "")
-    print("NLPString = " + NLPString)
-    print("JavaDocStringDict = " + JavaDocStringDict)
+    # print("NLPString = " + NLPString)
+    # print("JavaDocString = " + JavaDocString)
+    return NLPString, JavaDocString
+
+def getVarsFromJava(JavaDocString):
+	print("JavaDocString = " + JavaDocString)
+
+	variables = {}
+	text = ""
+	splitJavaDoc = JavaDocString.split()
+
+	for i in range(0, len(splitJavaDoc)):
+		#print(i, ") ", splitJavaDoc[i])
+		if "@" in splitJavaDoc[i]:
+			variables[splitJavaDoc[i+1]] = {"type": splitJavaDoc[i], "text": splitJavaDoc[i+2:]}
+	#
+	# for var in variables.keys():
+	# 	fullText = ""
+	# 	endOfText = 0
+	# 	for word in variables[var]:
+	# 		if word.startswith("@"):
+	# 			endOfText = 1
+	#
+	# 		if endOfText == 0:
+	# 			fullText = fullText + word + " "
+	#
+	# 	variables[var]["text"] = fullText
+
+
+
+	for var in variables.keys():
+		fullText = ""
+		for word in variables[var]["text"]:
+			fullText = fullText + word + " "
+
+		correctText = ""
+		endOfText = 0
+		for word in fullText:
+			if word.startswith("@"):
+				endOfText = 1
+
+			if endOfText == 0:
+				correctText = correctText + word + " "
+
+		variables[var]["text"] = fullText
+
+		for var in variables.keys():
+			print(var, ": ", variables[var])
+
+	return variables
 
 def generateRepOk(something):
-    findNL_JavaDoc_Sections(something)
-
-
+    NLPString, JavaDocString = findNL_JavaDoc_Sections(something)
+    # print("NLPString = " + NLPString)
+    # print("JavaDocString = " + JavaDocString)
+    variables = getVarsFromJava(JavaDocString)
 
 commentsDict = findCommentsAndCorrespondingCode("TowersOfHanoi.java")
 
-# for key in commentsDict.keys():
+# for key in commentsDict.keys():0.
 #     print(str(key) + ") " + commentsDict[key] + "\n\n")
 
 generateRepOk(commentsDict[2])
