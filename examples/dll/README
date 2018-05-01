@@ -1,0 +1,19 @@
+README
+(Be in root directory)
+
+TO COMPILE AND RUN WITH KORAT
+
+#For Windows: 
+
+javac -cp korat\korat.jar -source 6 -target 6 examples/*.java
+java -cp korat\korat.jar;examples korat.Korat --class DoublyLinkedList --args 2,3,3,3
+
+#For Ubuntu:
+javac -cp korat/korat.jar -source 6 -target 6 examples/*.java
+java -cp korat/korat.jar:examples korat.Korat --class DoublyLinkedList --args 2,3,3,3
+
+
+TO RUN VARIABLE_PARSER
+
+python parser.py examples/ DoublyLinkedList.DoublyLinkedList Entry.Entry ListObject.ListObject
+
