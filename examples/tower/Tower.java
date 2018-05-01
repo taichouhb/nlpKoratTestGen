@@ -1,5 +1,9 @@
 import java.util.Stack;
-
+import korat.finitization.IFinitization;
+import korat.finitization.IIntSet;
+import korat.finitization.IObjSet;
+import korat.finitization.impl.FinitizationFactory;
+import korat.finitization.IDoubleSet;
 class TowersOfHanoi {
 	public static void main(String args[]) {
 		int n = 3;
@@ -50,12 +54,27 @@ public class Tower {
 		}
 	}
 
+	@Override
+	public String toString(){
+		return Integer.toString(index);
+	}
+
   public boolean repOK() { 
-    if(index < 0 || index > 2){
-      return false;
-    }
-    return (disks.size() == 0);
+    return (index > 0 && index < 2);
+    // return (disks.size() == 0);
   }
+  public static IFinitization finTower(int size){
+  IFinitization f = FinitizationFactory.create(Tower.class);
+IObjSet towerSet = f.createObjSet(Tower.class, true);
+towerSet.addClassDomain(f.createClassDomain(Tower.class, size));
+IIntSet intSet = f.createIntSet(0, size);
+f.set("index", intSet);
+
+
+
+return f;
+}
+
 
     
     }

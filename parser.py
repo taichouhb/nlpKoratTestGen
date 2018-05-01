@@ -31,7 +31,7 @@ def classVarHelper(relPath, startInput, customClassNames):
 	while foundMainClass==False and i < len(lines):
 		line = lines[i]
 		
-		if "class " + startClass in line:
+		if "public class " + startClass in line:
 			foundMainClass = True
 			stack.append("{")
 		i+=1
@@ -116,7 +116,7 @@ if __name__ == "__main__":
 #output
 #{'syncObject': {'int': ['value']}, 'RaceFreeTest': {'String': ['hat'], 'boolean': ['tree'], 'syncObject': ['once', 'twice']}}
 
-#python parser.py examples/ DoublyLinkedList.DoublyLinkedList Entry.Entry ListObject.ListObject
+#python parser.py examples/dll/ DoublyLinkedList.DoublyLinkedList Entry.Entry ListObject.ListObject
 
 #output
 #({'DoublyLinkedList': {'int': ['size'], 'Entry': ['header']}, 'Entry': {'Entry': ['next', 'previous'], 'ListObject': ['element']}, 'ListObject': {'int': ['myID']}}, {'DoublyLinkedList', 'Entry', 'ListObject'})

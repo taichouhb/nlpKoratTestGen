@@ -13,7 +13,8 @@
 #Class made up of classes and primitives
 
 #Class made up of primitives
-
+import parser
+import sys
 
 def finitizationGen(startClass, classDictionary):
     header = "public static IFinitization fin" + startClass + \
@@ -56,7 +57,7 @@ def finitizationGen(startClass, classDictionary):
         if(primitive != "char"):
             capital = capitalization[primitive]
             setString += "I" + capital + "Set " + primitive + "Set = f.create" + \
-                    capital + "Set(size, size);\n"
+                    capital + "Set(0, size);\n"
 
     structureString = ""
     
@@ -83,4 +84,17 @@ def finitizationGen(startClass, classDictionary):
     return toReturn
 
 
-print(finitizationGen("DoublyLinkedList", {'DoublyLinkedList': {'int': ['size'], 'Entry': ['header']}, 'Entry': {'Entry': ['next', 'previous'], 'ListObject': ['element']}, 'ListObject': {'int': ['myID']}}))
+# print(finitizationGen("DoublyLinkedList", {'DoublyLinkedList': {'int': ['size'], 'Entry': ['header']}, 'Entry': {'Entry': ['next', 'previous'], 'ListObject': ['element']}, 'ListObject': {'int': ['myID']}}))
+# print(finitizationGen("DoublyLinkedList", parser.parseClassVariables("examples/dll/", ("DoublyLinkedList", "DoublyLinkedList"), [("Entry", "Entry"), ("ListObject", "ListObject")])))
+
+
+if __name__ == '__main__':
+    inp = sys.argv[2].split(".")
+    startInput = (inp[0], inp[1])
+    arr = []
+    for val in sys.argv[3:]:
+        vals = val.split(".")
+        arr.append((vals[0], vals[1]))
+    p = parser.parseClassVariables(sys.argv[1], startInput, arr)
+    print(p)
+    print(finitizationGen(startInput[0], p))
