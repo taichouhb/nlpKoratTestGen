@@ -12,4 +12,8 @@ public class Line {
   public boolean Intersect(Line line2){
     return Math.abs(this.slope - line2.slope) > epsilon || Math.abs(this.yintercept - line2.yintercept) < epsilon;
   }
+
+  public repOK(){
+    return true;
+  }
 }
