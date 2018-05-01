@@ -1,112 +1,121 @@
-import java.util.Set;
-
-import korat.finitization.IFinitization;
-import korat.finitization.IIntSet;
-import korat.finitization.IObjSet;
-import korat.finitization.impl.FinitizationFactory;
-
-public class DoublyLinkedList {
-
-    public Entry header;
-
-    private int size = 0;
-
-    public boolean repOK() {
-        return repOkNS();
+import java.util.NoSuchElementException;
+ 
+public class DoublyLinkedList<E> {
+ 
+    private Node head;
+    private Node tail;
+    private int size;
+     
+    public DoublyLinkedList() {
+        size = 0;
     }
-
-    @SuppressWarnings("unchecked")
-    public boolean repOkCommon() {
-
-        if (header == null)
-            return false;
-        if (header.element == null)
-            return size == 0 && header.next == header
-                    && header.previous == header;
-
-        Set visited = new java.util.HashSet();
-        visited.add(header);
-        Entry current = header;
-
-        while (true) {
-            Entry next = current.next;
-            if (next == null)
-                return false;
-            if (next.previous != current)
-                return false;
-            current = next;
-            if (!visited.add(next))
-                break;
+    /**
+     * this class keeps track of each element information
+     * @author java2novice
+     *
+     */
+    private class Node {
+        E element;
+        Node next;
+        Node prev;
+ 
+        public Node(E element, Node next, Node prev) {
+            this.element = element;
+            this.next = next;
+            this.prev = prev;
         }
-        if (current != header)
-            return false; // // maybe not needed (also in SortedList.java)
-        if (visited.size() != size)
-            return false;
-        return true;
     }
-
-    public boolean repOkNS() {
-        return repOkCommon();
+    /**
+     * returns the size of the linked list
+     * @return
+     */
+    public int size() { return size; }
+     
+    /**
+     * return whether the list is empty or not
+     * @return
+     */
+    public boolean isEmpty() { return size == 0; }
+     
+    /**
+     * adds element at the starting of the linked list
+     * @param element
+     */
+    public void addFirst(E element) {
+        Node tmp = new Node(element, head, null);
+        if(head != null ) {head.prev = tmp;}
+        head = tmp;
+        if(tail == null) { tail = tmp;}
+        size++;
+        System.out.println("adding: "+element);
     }
-
-    @SuppressWarnings("unchecked")
-    public boolean repOkSorted() {
-        if (!repOkCommon())
-            return false;
-        // check for sorted
-        if ((header.next != header)
-                && (!(header.next.element instanceof Comparable)))
-            return false;
-        for (Entry current = header.next; current.next != header; current = current.next) {
-            if ((!(current.next.element instanceof Comparable))
-                    || (((Comparable) current.element).compareTo((Comparable) current.next.element) > 0))
-                return false;
+     
+    /**
+     * adds element at the end of the linked list
+     * @param element
+     */
+    public void addLast(E element) {
+         
+        Node tmp = new Node(element, null, tail);
+        if(tail != null) {tail.next = tmp;}
+        tail = tmp;
+        if(head == null) { head = tmp;}
+        size++;
+        System.out.println("adding: "+element);
+    }
+     
+    /**
+     * this method walks forward through the linked list
+     */
+    public void iterateForward(){
+         
+        System.out.println("iterating forward..");
+        Node tmp = head;
+        while(tmp != null){
+            System.out.println(tmp.element);
+            tmp = tmp.next;
         }
-        return true;
     }
-
-    public String toString() {
-        String res = "";
-        Entry cur = this.header;
-        while (cur != null) {
-            res += cur.toString();
-            cur = cur.next;
-            if (cur == header)
-                break;
+     
+    /**
+     * this method walks backward through the linked list
+     */
+    public void iterateBackward(){
+         
+        System.out.println("iterating backword..");
+        Node tmp = tail;
+        while(tmp != null){
+            System.out.println(tmp.element);
+            tmp = tmp.prev;
         }
-        return res;
     }
-
-        public static IFinitization finDoublyLinkedList(int size) {
-        return finDoublyLinkedList(size, size, size+1, size+1);
+     
+    /**
+     * this method removes element from the start of the linked list
+     * @return
+     */
+    public E removeFirst() {
+        if (size == 0) throw new NoSuchElementException();
+        Node tmp = head;
+        head = head.next;
+        head.prev = null;
+        size--;
+        System.out.println("deleted: "+tmp.element);
+        return tmp.element;
     }
-        
-    public static IFinitization finDoublyLinkedList(int minSize, int maxSize,
-            int numEntries, int numElems) {
-        
-        IFinitization f = FinitizationFactory.create(DoublyLinkedList.class);
-
-        IObjSet entries = f.createObjSet(Entry.class, true);
-        entries.addClassDomain(f.createClassDomain(Entry.class, numEntries));
-
-        IObjSet elems = f.createObjSet(ListObject.class, true);
-        elems.addClassDomain(f.createClassDomain(ListObject.class, numElems));
-
-        IIntSet sizes = f.createIntSet(minSize, maxSize);
-
-        f.set("header", entries);
-        f.set("size", sizes);
-        f.set(Entry.class, "element", elems);
-        f.set(Entry.class, "next", entries);
-        f.set(Entry.class, "previous", entries);
-        
-        return f;
-        
+     
+    /**
+     * this method removes element from the end of the linked list
+     * @return
+     */
+    public E removeLast() {
+        if (size == 0) throw new NoSuchElementException();
+        Node tmp = tail;
+        tail = tail.prev;
+        tail.next = null;
+        size--;
+        System.out.println("deleted: "+tmp.element);
+        return tmp.element;
     }
-
-   
-
-
-
-
+     
 }
