@@ -77,24 +77,31 @@ public class DoublyLinkedList {
         return res;
     }
 
-    public static IFinitization finDoublyLinkedList(int size){
+        public static IFinitization finDoublyLinkedList(int size) {
+        return finDoublyLinkedList(size, size, size+1, size+1);
+    }
+        
+    public static IFinitization finDoublyLinkedList(int minSize, int maxSize,
+            int numEntries, int numElems) {
+        
         IFinitization f = FinitizationFactory.create(DoublyLinkedList.class);
-        IObjSet listobjectSet = f.createObjSet(ListObject.class, true);
-        listobjectSet.addClassDomain(f.createClassDomain(ListObject.class, size));
-        IObjSet doublylinkedlistSet = f.createObjSet(DoublyLinkedList.class, true);
-        doublylinkedlistSet.addClassDomain(f.createClassDomain(DoublyLinkedList.class, size));
-        IObjSet entrySet = f.createObjSet(Entry.class, true);
-        entrySet.addClassDomain(f.createClassDomain(Entry.class, size));
-        IIntSet intSet = f.createIntSet(0, size);
-        f.set("size", intSet);
-        f.set("header", entrySet);
-        f.set(ListObject.class, "myID", intSet);
-        f.set(Entry.class, "element", listobjectSet);
-        f.set(Entry.class, "next", entrySet);
-        f.set(Entry.class, "previous", entrySet);
 
+        IObjSet entries = f.createObjSet(Entry.class, true);
+        entries.addClassDomain(f.createClassDomain(Entry.class, numEntries));
 
+        IObjSet elems = f.createObjSet(ListObject.class, true);
+        elems.addClassDomain(f.createClassDomain(ListObject.class, numElems));
+
+        IIntSet sizes = f.createIntSet(minSize, maxSize);
+
+        f.set("header", entries);
+        f.set("size", sizes);
+        f.set(Entry.class, "element", elems);
+        f.set(Entry.class, "next", entries);
+        f.set(Entry.class, "previous", entries);
+        
         return f;
+        
     }
 
    

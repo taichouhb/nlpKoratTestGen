@@ -1,0 +1,44 @@
+
+Start of Korat Execution for Line (repOK, [5])
+
+slope: 0.0, yintercept: 0.0, epsilon:0.0
+slope: 0.0, yintercept: 1.0, epsilon:0.0
+slope: 0.0, yintercept: 2.0, epsilon:0.0
+slope: 0.0, yintercept: 3.0, epsilon:0.0
+slope: 0.0, yintercept: 4.0, epsilon:0.0
+slope: 0.0, yintercept: 5.0, epsilon:0.0
+slope: 1.0, yintercept: 0.0, epsilon:0.0
+slope: 1.0, yintercept: 1.0, epsilon:0.0
+slope: 1.0, yintercept: 2.0, epsilon:0.0
+slope: 1.0, yintercept: 3.0, epsilon:0.0
+slope: 1.0, yintercept: 4.0, epsilon:0.0
+slope: 1.0, yintercept: 5.0, epsilon:0.0
+slope: 2.0, yintercept: 0.0, epsilon:0.0
+slope: 2.0, yintercept: 1.0, epsilon:0.0
+slope: 2.0, yintercept: 2.0, epsilon:0.0
+slope: 2.0, yintercept: 3.0, epsilon:0.0
+slope: 2.0, yintercept: 4.0, epsilon:0.0
+slope: 2.0, yintercept: 5.0, epsilon:0.0
+slope: 3.0, yintercept: 0.0, epsilon:0.0
+slope: 3.0, yintercept: 1.0, epsilon:0.0
+slope: 3.0, yintercept: 2.0, epsilon:0.0
+slope: 3.0, yintercept: 3.0, epsilon:0.0
+slope: 3.0, yintercept: 4.0, epsilon:0.0
+slope: 3.0, yintercept: 5.0, epsilon:0.0
+slope: 4.0, yintercept: 0.0, epsilon:0.0
+slope: 4.0, yintercept: 1.0, epsilon:0.0
+slope: 4.0, yintercept: 2.0, epsilon:0.0
+slope: 4.0, yintercept: 3.0, epsilon:0.0
+slope: 4.0, yintercept: 4.0, epsilon:0.0
+slope: 4.0, yintercept: 5.0, epsilon:0.0
+slope: 5.0, yintercept: 0.0, epsilon:0.0
+slope: 5.0, yintercept: 1.0, epsilon:0.0
+slope: 5.0, yintercept: 2.0, epsilon:0.0
+slope: 5.0, yintercept: 3.0, epsilon:0.0
+slope: 5.0, yintercept: 4.0, epsilon:0.0
+slope: 5.0, yintercept: 5.0, epsilon:0.0
+Total explored:41
+New found:36
+
+End of Korat Execution
+Overall time: 0.143 s.

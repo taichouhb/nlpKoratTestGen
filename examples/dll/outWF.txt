@@ -44688,4 +44688,4 @@ Total explored:44769
 New found:44683
 
 End of Korat Execution
-Overall time: 0.807 s.
+Overall time: 0.746 s.

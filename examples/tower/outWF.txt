@@ -1,0 +1,9 @@
+
+Start of Korat Execution for Tower (repOK, [10])
+
+1
+Total explored:11
+New found:1
+
+End of Korat Execution
+Overall time: 0.117 s.
