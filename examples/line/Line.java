@@ -14,6 +14,6 @@ public class Line {
   }
 
   public repOK(){
-    return true;
+    return epsilon<0.01;
   }
 }
